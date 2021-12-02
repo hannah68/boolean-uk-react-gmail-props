@@ -1,11 +1,20 @@
+import './Email.css';
+
 const Email = (props) => {
+    const me = (e) => {
+      // props.setHandleClick(e.target.id)
+    
+      console.log(props.email)
+      props.handleClickEmail(props.email)
+    }
+    
     const toggleStar = targetEmail => {
         const updatedEmails = emails =>
         emails.map(email =>
             email.id === targetEmail.id
               ? { ...email, starred: !email.starred }
               : email
-          )
+        )
         props.set(updatedEmails);
     }
     
@@ -19,6 +28,7 @@ const Email = (props) => {
 
     return(
         <li 
+        onClick={me}
         key={props.index} 
         className={`email ${props.email.read ? 'read' : 'unread'}`}
         >

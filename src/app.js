@@ -1,32 +1,33 @@
 import { useState } from 'react'
 import Emails from './components/Emails'
+import ShowEmail from './components/ShowEmail'
 import initialEmails from './data/emails'
-
 import './styles/app.css'
 
 const getReadEmails = emails => emails.filter(email => !email.read)
 const getStarredEmails = emails => emails.filter(email => email.starred)
 
-function App() {
+function App(props) {
   const [emails, setEmails] = useState(initialEmails)
   const [hideRead, setHideRead] = useState(false)
   const [currentTab, setCurrentTab] = useState('inbox');
   const [search, setSearch] = useState('');
+  const [handleClick, setHandleClick] = useState(null);
 
   const unreadEmails = emails.filter(email => !email.read)
   const starredEmails = emails.filter(email => email.starred)
 
-  let filteredEmails = emails
 
-  const updatedEmail = emails.filter(el => {
-    if (search === "") {
-      return el;
-    } else if (el.sender === search) {
-      return el
-    }
-  })
-  
-  filteredEmails = updatedEmail
+  const handleClickEmail =(text) => {
+    const updatedArr = emails.filter(el => {
+      return el.id === text.id
+    })
+    setHandleClick(updatedArr)
+    // props.setHandleClick(updatedArr)
+    console.log(updatedArr);
+  }
+
+  let filteredEmails = emails
  
   if (hideRead) filteredEmails = getReadEmails(filteredEmails)
   if (currentTab === 'starred')
@@ -83,7 +84,9 @@ function App() {
         </ul>
       </nav>
       <main className="emails">
-        <Emails emails={filteredEmails} set={setEmails}/>
+        {!handleClick ? <Emails emails={filteredEmails} set={setEmails} search={search} handleClickEmail={handleClickEmail}/> :
+          <ShowEmail handleClick={handleClick}/>
+        }
       </main>
       
     </div>
