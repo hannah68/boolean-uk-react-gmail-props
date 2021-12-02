@@ -7,15 +7,15 @@ const Email = (props) => {
               : email
           )
         props.set(updatedEmails);
-      }
+    }
     
-      const toggleRead = targetEmail => {
+    const toggleRead = targetEmail => {
         const updatedEmails = emails =>
         emails.map(email =>
             email.id === targetEmail.id ? { ...email, read: !email.read } : email
           )
         props.set(updatedEmails);
-      }
+    }
 
     return(
         <li 

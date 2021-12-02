@@ -5,7 +5,6 @@ import initialEmails from './data/emails'
 import './styles/app.css'
 
 const getReadEmails = emails => emails.filter(email => !email.read)
-
 const getStarredEmails = emails => emails.filter(email => email.starred)
 
 function App() {
@@ -17,25 +16,19 @@ function App() {
   const unreadEmails = emails.filter(email => !email.read)
   const starredEmails = emails.filter(email => email.starred)
 
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-  }
+  let filteredEmails = emails
 
-  const filteredEmails = emails.filter(el => {
-    if(search === ''){
-      return true
-    }else if(search=== el.sender){
-      setEmails()
+  const updatedEmail = emails.filter(el => {
+    if (search === "") {
+      return el;
+    } else if (el.sender === search) {
+      return el
     }
   })
   
-
-  
-
-  let filteredEmails = emails
-
+  filteredEmails = updatedEmail
+ 
   if (hideRead) filteredEmails = getReadEmails(filteredEmails)
-
   if (currentTab === 'starred')
     filteredEmails = getStarredEmails(filteredEmails)
 
@@ -54,7 +47,11 @@ function App() {
         </div>
 
         <div className="search">
-          <input className="search-bar" placeholder="Search mail" onChange={handleSearchChange} value={search}/>
+          <input 
+            className="search-bar" 
+            placeholder="Search mail" 
+            onChange={(e) => setSearch(e.target.value)} value={search}
+          />
         </div>
       </header>
       <nav className="left-menu">

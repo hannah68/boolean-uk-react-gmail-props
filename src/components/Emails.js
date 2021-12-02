@@ -1,7 +1,6 @@
 import Email from './Email';
 
 const Emails = (props) => {
-    console.log(props.emails)
     return(
         <ul>
             {props.emails.map((email, index) => (
